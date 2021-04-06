@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`add snapshot for header  1`] = `
+<DocumentFragment>
+  <header
+    class="header"
+  >
+    <nav>
+      <h1
+        class="brand"
+      >
+        <a
+          href="/"
+        >
+          <span
+            class="visually-hidden"
+          >
+            Currency converter
+          </span>
+          <img
+            alt="currency converter logo"
+            class="logo"
+            src="logo.svg"
+          />
+        </a>
+      </h1>
+    </nav>
+  </header>
+</DocumentFragment>
+`;

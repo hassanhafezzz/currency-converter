@@ -1,0 +1,18 @@
+@value utils: '../../styles/utils.css';
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background-color: var(--color-white);
+  height: 60px;
+  box-shadow: 0 1px 10px 2px var(--color-gray-100);
+}
+
+.logo {
+  height: 30px;
+}
+
+.visually-hidden {
+  composes: visually-hidden from utils;
+}
