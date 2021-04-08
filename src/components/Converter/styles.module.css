@@ -10,10 +10,10 @@
 }
 
 .converter {
+  margin: 2rem auto 1.5rem;
   position: relative;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  margin: 2rem auto;
   filter: drop-shadow(0 20px 20px var(--color-primary-dark));
 }
 
@@ -23,6 +23,7 @@
   border-bottom-left-radius: 0.5rem;
   border-top-left-radius: 0.5rem;
 }
+
 .to {
   background-color: var(--color-gray-100);
   padding: 2rem 1rem 2rem 3rem;
@@ -90,4 +91,20 @@
 .rate {
   margin: 2.5rem 0.5rem 0;
   font-size: var(--small-paragraph);
+}
+
+.rate span {
+  font-weight: var(--bold);
+}
+
+.last-update {
+  display: flex;
+  padding: 0 0.5rem;
+  justify-content: flex-end;
+  font-size: var(--small-paragraph);
+  color: var(--color-primary-light);
+}
+
+.last-update span {
+  margin-right: 0.2rem;
 }
