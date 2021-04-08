@@ -26,4 +26,7 @@ module.exports = {
     'plugin:jsx-a11y/recommended',
     'plugin:prettier/recommended',
   ],
+  rules: {
+    'react/prop-types': 'off',
+  },
 };

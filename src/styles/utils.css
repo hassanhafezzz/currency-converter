@@ -8,3 +8,32 @@
   position: absolute;
   width: 1px;
 }
+
+.title {
+  color: var(--color-white);
+  font-size: var(--h1-size);
+  position: relative;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 750px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 970px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1080px;
+  }
+}

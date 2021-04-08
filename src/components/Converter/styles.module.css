@@ -1,0 +1,93 @@
+@value utils: '../../styles/utils.css';
+
+.container {
+  margin-top: 5rem;
+  composes: container from utils;
+}
+
+.title {
+  composes: title from utils;
+}
+
+.converter {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 2rem auto;
+  filter: drop-shadow(0 20px 20px var(--color-primary-dark));
+}
+
+.from {
+  background-color: var(--color-white);
+  padding: 2rem 3rem 2rem 1rem;
+  border-bottom-left-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+}
+.to {
+  background-color: var(--color-gray-100);
+  padding: 2rem 1rem 2rem 3rem;
+  border-bottom-right-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.currency-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.currency-row > input {
+  grid-column: span 3 / span 3;
+}
+
+.currency-row > div {
+  grid-column: span 2 / span 2;
+}
+
+.switch-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--color-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 4rem;
+}
+
+.switch-icon img {
+  width: 1.5rem;
+}
+
+.refresh-button {
+  margin: 2.5rem 0.5rem 0;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: var(--color-accent);
+  font-size: var(--small-paragraph);
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.refresh-button svg {
+  width: 1rem;
+  margin-right: 0.5rem;
+}
+
+.refresh-button:hover {
+  color: var(--color-primary-dark);
+}
+
+.rate {
+  margin: 2.5rem 0.5rem 0;
+  font-size: var(--small-paragraph);
+}

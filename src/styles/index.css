@@ -1,15 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;700&display=swap');
 
 :root {
-  --font-family: 'Roboto', sans-serif;
+  --font-family: 'Nunito', sans-serif;
   --bold: 700;
   --normal: 400;
-  --color-primary: #0abf53;
-  --color-gray-500: #a5afbd;
+  --light: 200;
+  --color-accent: #0abf53;
+  --color-primary-light: #d1fedd;
+  --color-primary: #089379;
+  --color-primary-dark: #076f5b;
+  --color-gray-700: #a5afbd;
+  --color-gray-500: #c2c9d3;
+  --color-gray-300: #dce1e7;
   --color-gray-100: #f3f6f9;
   --color-white: #fff;
   --color-black: #00112c;
-  --h1-size: 1.8rem;
+  --h1-size: 2rem;
   --h2-size: 1.6rem;
   --h3-size: 1.4rem;
   --h4-size: 1.2rem;
@@ -22,21 +28,17 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   margin: 0;
-  font-size: 14px;
+  font-size: 16px;
   font-family: var(--font-family);
   color: var(--color-black);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--color-white);
+  background: var(--color-primary);
 }
 
 ::selection {
-  background-color: var(--color-primary);
+  background-color: var(--color-accent);
   color: white;
 }
