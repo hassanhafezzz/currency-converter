@@ -27,12 +27,12 @@ const getStyles = (variant: Variant) => ({
         variant === 'gray' ? getThemeProperty('--color-gray-100') : '#fff',
       borderBottom: `3px solid ${
         isFocused
-          ? getThemeProperty('--color-primary')
+          ? getThemeProperty('--color-primary-500')
           : getThemeProperty('--color-gray-500')
       }`,
       fontSize: getThemeProperty('--h3-size'),
       '&:hover': {
-        borderColor: getThemeProperty('--color-primary'),
+        borderColor: getThemeProperty('--color-primary-500'),
       },
     };
   },
@@ -48,10 +48,10 @@ const getStyles = (variant: Variant) => ({
     let bgColor = '#fff';
     let color = getThemeProperty('--color-black');
     if (isSelected) {
-      bgColor = getThemeProperty('--color-primary');
+      bgColor = getThemeProperty('--color-primary-500');
       color = '#fff';
     } else if (isFocused) {
-      bgColor = getThemeProperty('--color-primary-light');
+      bgColor = getThemeProperty('--color-primary-100');
     }
     return {
       ...provided,

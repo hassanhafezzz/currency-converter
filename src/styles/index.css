@@ -6,9 +6,12 @@
   --normal: 400;
   --light: 200;
   --color-accent: #0abf53;
-  --color-primary-light: #d1fedd;
-  --color-primary: #089379;
-  --color-primary-dark: #076f5b;
+  --color-primary-900: #076f5b;
+  --color-primary-500: #089379;
+  --color-primary-100: #d1fedd;
+  --color-red-500: #ac2b2b;
+  --color-red-100: #ffd5d5;
+  --color-gray-900: #8c94a0;
   --color-gray-700: #a5afbd;
   --color-gray-500: #c2c9d3;
   --color-gray-300: #dce1e7;
@@ -35,7 +38,7 @@ body {
   color: var(--color-black);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--color-primary);
+  background: var(--color-primary-500);
 }
 
 ::selection {
