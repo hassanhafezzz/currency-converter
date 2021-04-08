@@ -4,16 +4,29 @@ const instance = axios.create({
   baseURL: process.env.REACT_APP_BASE_API_URL,
 });
 
-instance.interceptors.request.use((config) => {
-  const [url, ...queries] = config.url ? config.url.split('?') : [];
+instance.interceptors.request.use(
+  (config) => {
+    const { url } = config;
+    config.url = `${url}?access_key=${process.env.REACT_APP_ACCESS_KEY}`;
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
 
-  let newUrl = `${url}?access_key=${process.env.REACT_APP_ACCESS_KEY}`;
-  if (queries && queries.length > 0) {
-    newUrl = `${newUrl}&${queries.join('')}`;
-  }
-  config.url = newUrl;
-
-  return config;
-});
+instance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response) {
+      return Promise.reject(error.response.data.error);
+    } else if (error.request) {
+      return Promise.reject(error.request);
+    }
+    return Promise.reject(error);
+  },
+);
 
 export default instance;

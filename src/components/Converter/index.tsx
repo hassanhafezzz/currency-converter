@@ -1,13 +1,13 @@
 import React, { useEffect, useState, FC, ChangeEvent } from 'react';
 import classNames from 'classnames/bind';
 import TimeAgo from 'react-timeago';
-// import api from '../../api';
+import api from '../../api';
 import { latest } from '../../dataMock';
 import {
   sleep,
   getNewToAmount,
   getNewFromAmount,
-  calcNewRates,
+  recalculateRatesExchangeRateAndToAmount,
   getFlagFromCurrencyCode,
 } from '../../utils';
 import switchImg from '../../imgs/switch.svg';
@@ -19,7 +19,11 @@ import styles from './styles.module.css';
 const cx = classNames.bind(styles);
 
 export type Rates = { [key: string]: number };
-
+export type Latest = {
+  rates: Rates;
+  base: string;
+  timestamp: number;
+};
 const Converter: FC = () => {
   const [currencyRates, setCurrencyRates] = useState<Rates>({});
   const [lastUpdated, setLastUpdated] = useState(0);
@@ -28,39 +32,46 @@ const Converter: FC = () => {
   const [exchangeRate, setExchangeRate] = useState(0);
   const [fromAmount, setFromAmount] = useState(1);
   const [toAmount, setToAmount] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const getCurrencyOptions = async () => {
-      // const {data} = await api.get('/latest');
-      // === TODO replace mockdata with api call
+      setIsLoading(true);
+      try {
+        // === TODO replace mockdata with api call
+        // const { data } = await api.get('/latest');
+        await sleep(1e2);
+        const data = latest;
 
-      await sleep(1e3);
-      const data = latest;
+        const { base, rates, timestamp }: Latest = data;
+        const ratesKeys = Object.keys(rates);
+        const toCurrency = ratesKeys[0];
+        const exchangeRate = rates[toCurrency];
+        const newToAmount = getNewToAmount(1, exchangeRate);
 
-      const {
-        base,
-        rates,
-        timestamp,
-      }: {
-        base: string;
-        timestamp: number;
-        rates: Rates;
-      } = data;
-      const ratesKeys = Object.keys(rates);
-      const toCurrency = ratesKeys[0];
-      const exchangeRate = rates[toCurrency];
-      const newToAmount = getNewToAmount(1, exchangeRate);
-
-      setCurrencyRates(rates);
-      setFromCurrency(base);
-      setToCurrency(toCurrency);
-      setExchangeRate(exchangeRate);
-      setToAmount(newToAmount);
-      setLastUpdated(timestamp);
+        setCurrencyRates(rates);
+        setFromCurrency(base);
+        setToCurrency(toCurrency);
+        setExchangeRate(exchangeRate);
+        setToAmount(newToAmount);
+        setLastUpdated(timestamp);
+      } catch (error) {
+        showError(error?.message ?? 'Oops something went wrong');
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     getCurrencyOptions();
   }, []);
+
+  const showError = (error: string) => {
+    setError(error);
+    setTimeout(() => {
+      setError('');
+    }, 3e3);
+  };
 
   const handleFromAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
     const currFromAmount = Number(e.target.value);
@@ -77,13 +88,19 @@ const Converter: FC = () => {
   };
 
   const handleFromCurrencyChange = (newFromCurrency: string) => {
-    const rateConverter = currencyRates[newFromCurrency];
-    const newCurrencyRates = calcNewRates(currencyRates, rateConverter);
-    const newExchangeRate = newCurrencyRates[toCurrency];
-    const newToAmount = getNewToAmount(fromAmount, newExchangeRate);
+    const {
+      calculatedRates,
+      newExchangeRate,
+      newToAmount,
+    } = recalculateRatesExchangeRateAndToAmount({
+      oldRates: currencyRates,
+      fromCurrency: newFromCurrency,
+      toCurrency,
+      fromAmount,
+    });
 
     setFromCurrency(newFromCurrency);
-    setCurrencyRates(newCurrencyRates);
+    setCurrencyRates(calculatedRates);
     setExchangeRate(newExchangeRate);
     setToAmount(newToAmount);
   };
@@ -95,6 +112,34 @@ const Converter: FC = () => {
     setExchangeRate(newExchangeRate);
     setToCurrency(newToCurrency);
     setToAmount(newToAmount);
+  };
+
+  const refreshRates = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await api.get('/latest');
+      const { rates, timestamp } = data;
+
+      const {
+        calculatedRates,
+        newExchangeRate,
+        newToAmount,
+      } = recalculateRatesExchangeRateAndToAmount({
+        oldRates: rates,
+        fromCurrency,
+        toCurrency,
+        fromAmount,
+      });
+
+      setLastUpdated(timestamp);
+      setExchangeRate(newExchangeRate);
+      setToAmount(newToAmount);
+      setCurrencyRates(calculatedRates);
+    } catch (error) {
+      showError(error?.message ?? 'Oops something went wrong');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const currencyOptions = Object.keys(currencyRates);
@@ -126,9 +171,14 @@ const Converter: FC = () => {
               label="Currency Type"
             />
           </div>
-          <button type="button" className={cx('refresh-button')}>
+          <button
+            type="button"
+            onClick={refreshRates}
+            className={cx('refresh-button', { loading: isLoading })}
+            disabled={isLoading}
+          >
             <RefreshIcon fill="currentColor" />
-            Refresh rates
+            {isLoading ? '' : 'Refresh rates'}
           </button>
         </div>
 
@@ -156,10 +206,12 @@ const Converter: FC = () => {
               aria-label="Currency Type"
             />
           </div>
-          <p className={cx('rate')}>
-            <span>1</span> {fromCurrency} = <span>{exchangeRate}</span> {''}
-            {toCurrency}
-          </p>
+          {exchangeRate ? (
+            <p className={cx('rate')}>
+              <span>1</span> {fromCurrency} = <span>{exchangeRate}</span> {''}
+              {toCurrency}
+            </p>
+          ) : null}
         </div>
       </div>
       {lastUpdated ? (
@@ -167,6 +219,12 @@ const Converter: FC = () => {
           <span>last updated </span>
           <TimeAgo date={new Date(lastUpdated * 1000)} />
         </p>
+      ) : null}
+
+      {error ? (
+        <div role="alert" className={cx('error')}>
+          <p>{error}</p>
+        </div>
       ) : null}
     </div>
   );

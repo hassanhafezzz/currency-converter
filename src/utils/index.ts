@@ -43,3 +43,29 @@ export const calcNewRates = (rates: Rates, converter: number): Rates => {
   }
   return newRates;
 };
+
+type RecalculationProps = {
+  oldRates: Rates;
+  fromCurrency: string;
+  toCurrency: string;
+  fromAmount: number;
+};
+
+type RecalculationResult = {
+  calculatedRates: Rates;
+  newExchangeRate: number;
+  newToAmount: number;
+};
+
+export const recalculateRatesExchangeRateAndToAmount = ({
+  oldRates,
+  fromCurrency,
+  toCurrency,
+  fromAmount,
+}: RecalculationProps): RecalculationResult => {
+  const rateConverter = oldRates[fromCurrency];
+  const calculatedRates = calcNewRates(oldRates, rateConverter);
+  const newExchangeRate = calculatedRates[toCurrency];
+  const newToAmount = getNewToAmount(fromAmount, newExchangeRate);
+  return { calculatedRates, newExchangeRate, newToAmount };
+};

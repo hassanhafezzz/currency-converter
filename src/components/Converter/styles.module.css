@@ -1,5 +1,11 @@
 @value utils: '../../styles/utils.css';
 
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .container {
   margin-top: 5rem;
   composes: container from utils;
@@ -14,7 +20,7 @@
   position: relative;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  filter: drop-shadow(0 20px 20px var(--color-primary-dark));
+  filter: drop-shadow(0 20px 20px var(--color-primary-900));
 }
 
 .from {
@@ -79,13 +85,22 @@
   cursor: pointer;
 }
 
+.refresh-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .refresh-button svg {
   width: 1rem;
   margin-right: 0.5rem;
 }
 
+.refresh-button.loading svg {
+  animation: spin 1s linear infinite;
+}
+
 .refresh-button:hover {
-  color: var(--color-primary-dark);
+  color: var(--color-primary-900);
 }
 
 .rate {
@@ -102,9 +117,13 @@
   padding: 0 0.5rem;
   justify-content: flex-end;
   font-size: var(--small-paragraph);
-  color: var(--color-primary-light);
+  color: var(--color-primary-100);
 }
 
 .last-update span {
   margin-right: 0.2rem;
+}
+
+.error {
+  composes: error from utils;
 }
