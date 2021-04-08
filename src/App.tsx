@@ -1,12 +1,13 @@
 import React, { FC } from 'react';
 import Header from './components/Header';
+import Converter from './components/Converter';
 
 const App: FC = () => {
   return (
     <>
       <Header />
-      <main>
-        <h1>Awesome currency convertor</h1>
+      <main role="main">
+        <Converter />
       </main>
     </>
   );
