@@ -4,6 +4,8 @@ import App from './App';
 
 test('renders app heading correctly', () => {
   render(<App />);
-  const header = screen.getByRole('heading', { name: /currency convertor/i });
+  const header = screen.getByRole('heading', {
+    name: /currency converter/i,
+  });
   expect(header).toBeInTheDocument();
 });

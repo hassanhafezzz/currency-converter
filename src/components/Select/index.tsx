@@ -71,6 +71,7 @@ const getStyles = (variant: Variant) => ({
 
 const SelectWrapper: FC<ReactSelectProps> = ({
   variant = 'default',
+  testId,
   defaultValue,
   options,
   label,
@@ -78,13 +79,15 @@ const SelectWrapper: FC<ReactSelectProps> = ({
 }) => {
   const customStyles = getStyles(variant);
   return (
-    <Select
-      styles={customStyles}
-      defaultValue={defaultValue}
-      options={options}
-      aria-label={label}
-      {...rest}
-    />
+    <div data-testid={testId}>
+      <Select
+        styles={customStyles}
+        defaultValue={defaultValue}
+        options={options}
+        aria-label={label}
+        {...rest}
+      />
+    </div>
   );
 };
 
