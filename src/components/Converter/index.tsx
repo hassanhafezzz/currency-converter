@@ -1,10 +1,9 @@
 import React, { useEffect, useState, FC, ChangeEvent } from 'react';
 import classNames from 'classnames/bind';
 import TimeAgo from 'react-timeago';
-import api from '../../api';
-import { latest } from '../../dataMock';
+import { fetchLatestRates } from '../../api';
+
 import {
-  sleep,
   getNewToAmount,
   getNewFromAmount,
   recalculateRatesExchangeRateAndToAmount,
@@ -24,6 +23,7 @@ export type Latest = {
   base: string;
   timestamp: number;
 };
+
 const Converter: FC = () => {
   const [currencyRates, setCurrencyRates] = useState<Rates>({});
   const [lastUpdated, setLastUpdated] = useState(0);
@@ -39,11 +39,7 @@ const Converter: FC = () => {
     const getCurrencyOptions = async () => {
       setIsLoading(true);
       try {
-        // === TODO replace mockdata with api call
-        // const { data } = await api.get('/latest');
-        await sleep(1e2);
-        const data = latest;
-
+        const { data } = await fetchLatestRates();
         const { base, rates, timestamp }: Latest = data;
         const ratesKeys = Object.keys(rates);
         const toCurrency = ratesKeys[0];
@@ -68,7 +64,7 @@ const Converter: FC = () => {
 
   const showError = (error: string) => {
     setError(error);
-    setTimeout(() => {
+    window.setTimeout(() => {
       setError('');
     }, 3e3);
   };
@@ -117,7 +113,7 @@ const Converter: FC = () => {
   const refreshRates = async () => {
     setIsLoading(true);
     try {
-      const { data } = await api.get('/latest');
+      const { data } = await fetchLatestRates();
       const { rates, timestamp } = data;
 
       const {
@@ -159,21 +155,23 @@ const Converter: FC = () => {
               value={fromAmount}
               min="0"
               type="number"
-              label="Currency Amount Field"
+              label="from Amount Field"
             />
 
             <Select
+              testId="from-currency-select"
               onChange={(option) => {
                 handleFromCurrencyChange(option?.value ?? '');
               }}
               value={options.find((option) => option.value === fromCurrency)}
               options={options}
-              label="Currency Type"
+              label="from currency type"
             />
           </div>
           <button
             type="button"
             onClick={refreshRates}
+            title={isLoading ? 'loading...' : 'refresh rates'}
             className={cx('refresh-button', { loading: isLoading })}
             disabled={isLoading}
           >
@@ -194,16 +192,17 @@ const Converter: FC = () => {
               min="0"
               type="number"
               variant="gray"
-              label="Currency Amount Field"
+              label="To Amount Field"
             />
             <Select
+              testId="to-currency-select"
               onChange={(option) => {
                 handleToCurrencyChange(option?.value ?? '');
               }}
               value={options.find((option) => option.value === toCurrency)}
               options={options}
               variant="gray"
-              aria-label="Currency Type"
+              aria-label="to currency type"
             />
           </div>
           {exchangeRate ? (

@@ -12,12 +12,8 @@ const Header: FC = () => {
       <nav>
         <h1 className={cx('brand')}>
           <a href="/">
-            <span className={cx('visually-hidden')}>Currency converter</span>
-            <img
-              src={logo}
-              className={cx('logo')}
-              alt="currency converter logo"
-            />
+            <span className={cx('visually-hidden')}>Converto</span>
+            <img src={logo} className={cx('logo')} alt="Converto app logo" />
           </a>
         </h1>
       </nav>

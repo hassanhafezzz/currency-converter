@@ -17,7 +17,9 @@ export const getFlagFromCurrencyCode = (currencyCode: string): string => {
   return flag(country) ?? '💵';
 };
 
-export const getCurrencyFromCurrencyCode = (currencyCode: string): string => {
+export const getCurrencyNameFromCurrencyCode = (
+  currencyCode: string,
+): string => {
   const info = currencyMap[currencyCode];
   return info?.currency ?? currencyCode;
 };
@@ -33,6 +35,9 @@ export const getNewFromAmount = (
   amount: number,
   exchangeRate: number,
 ): number => {
+  if (amount === 0 || exchangeRate === 0) {
+    return 0;
+  }
   return Number((amount / exchangeRate).toFixed(2));
 };
 

@@ -29,4 +29,6 @@ instance.interceptors.response.use(
   },
 );
 
+export const fetchLatestRates = () => instance.get('/latest');
+
 export default instance;
