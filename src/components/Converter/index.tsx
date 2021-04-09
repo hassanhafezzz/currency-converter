@@ -9,10 +9,12 @@ import {
   recalculateRatesExchangeRateAndToAmount,
   getFlagFromCurrencyCode,
 } from '../../utils';
+
 import switchImg from '../../imgs/switch.svg';
 import { ReactComponent as RefreshIcon } from '../../imgs/refresh.svg';
 import Select from '../Select';
 import Input from '../Input';
+import ErrorMessage from '../ErrorMessage';
 
 import styles from './styles.module.css';
 const cx = classNames.bind(styles);
@@ -53,7 +55,7 @@ const Converter: FC = () => {
         setToAmount(newToAmount);
         setLastUpdated(timestamp);
       } catch (error) {
-        showError(error?.message ?? 'Oops something went wrong');
+        setError(error?.message ?? 'Oops something went wrong');
       } finally {
         setIsLoading(false);
       }
@@ -61,13 +63,6 @@ const Converter: FC = () => {
 
     getCurrencyOptions();
   }, []);
-
-  const showError = (error: string) => {
-    setError(error);
-    window.setTimeout(() => {
-      setError('');
-    }, 3e3);
-  };
 
   const handleFromAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
     const currFromAmount = Number(e.target.value);
@@ -132,7 +127,7 @@ const Converter: FC = () => {
       setToAmount(newToAmount);
       setCurrencyRates(calculatedRates);
     } catch (error) {
-      showError(error?.message ?? 'Oops something went wrong');
+      setError(error?.message ?? 'Oops something went wrong');
     } finally {
       setIsLoading(false);
     }
@@ -221,9 +216,7 @@ const Converter: FC = () => {
       ) : null}
 
       {error ? (
-        <div role="alert" className={cx('error')}>
-          <p>{error}</p>
-        </div>
+        <ErrorMessage dismissMessage={() => setError('')}>{error}</ErrorMessage>
       ) : null}
     </div>
   );
