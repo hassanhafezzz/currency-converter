@@ -1,0 +1,34 @@
+.error {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--color-red-500);
+  background-color: var(--color-red-100);
+  padding: 1rem 0.2rem;
+  font-size: var(--small-paragraph);
+  border-radius: 8px;
+  text-align: center;
+  filter: drop-shadow(0 20px 20px var(--color-primary-900));
+}
+
+.error p {
+  margin: 0.7rem 0 1rem 0;
+  padding: 0 2rem;
+}
+
+.close {
+  padding: 0.2rem 0.5rem;
+  margin-right: 1rem;
+  outline: none;
+  border: none;
+  background-color: var(--color-red-500);
+  border-radius: 2rem;
+  color: var(--color-red-100);
+  font-size: var(--small-paragraph);
+  text-transform: capitalize;
+  cursor: pointer;
+  align-self: flex-end;
+}

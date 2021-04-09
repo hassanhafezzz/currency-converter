@@ -15,20 +15,6 @@
   position: relative;
 }
 
-.error {
-  position: fixed;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--color-red-500);
-  background-color: var(--color-red-100);
-  padding: 0.2rem 1rem;
-  font-size: var(--small-paragraph);
-  border-radius: 8px;
-  text-align: center;
-  filter: drop-shadow(0 20px 20px var(--color-primary-900));
-}
-
 .container {
   margin: 0 auto;
   padding: 0 2rem;
