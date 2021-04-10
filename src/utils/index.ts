@@ -2,11 +2,6 @@ import { flag } from 'country-emoji';
 import currencyMap from './currencyMap';
 import { Rates } from '../components/Converter';
 
-//=== TODO: Remove sleep utils
-export const sleep = (ms: number) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-};
-
 export const getThemeProperty = (property: string): string => {
   return getComputedStyle(document.documentElement).getPropertyValue(property);
 };
