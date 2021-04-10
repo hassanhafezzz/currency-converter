@@ -24,6 +24,7 @@
     "commit": "git add . && git-cz",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy": "aws s3 sync build/ s3://currency-converter-app --acl public-read",
     "test": "react-scripts test",
     "test:e2e": "start-server-and-test start http://localhost:3000 cy:open",
     "cy:run": "cypress run",
