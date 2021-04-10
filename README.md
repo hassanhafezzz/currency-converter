@@ -3,7 +3,7 @@ This project was bootstrapped with
 
 # 💵 Currency Converter 💵
 
-![alt text](https://github.com/hassanhafezzz/currency-converter/raw/master/demo.png?raw=true)
+![alt text](https://github.com/hassanhafezzz/currency-converter/raw/main/demo.png?raw=true)
 
 ---
 
@@ -18,6 +18,17 @@ This project was bootstrapped with
 - Uses React testing library for UI auditing.
 - Uses Cypress for E2E testing.
 - Uses Axe for accessability assertions.
+
+---
+
+## 🏭 Deployment
+
+You can view app the
+[here](http://currency-converter-app.s3-website.eu-west-3.amazonaws.com/).
+<br /> <br /> _Note as [Exchange Rates API](https://exchangeratesapi.io/)
+doesn't offer https to its free account I had to deploy it on **S3** with http
+as deploying it on Netlify or Vercel will produce **a mixed content error** as
+they serve their websites on https._
 
 ---
 
