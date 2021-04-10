@@ -13,6 +13,7 @@ This project was bootstrapped with
 - Currency selection autocomplete.
 - Refresh rates on command.
 - Built with React and Typescript.
+- Mobile friendly (responsive).
 - Uses [Exchange Rates API](https://exchangeratesapi.io/).
 - Uses github actions for a CI/CD.
 - Uses React testing library for UI auditing.
